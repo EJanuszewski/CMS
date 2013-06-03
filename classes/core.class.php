@@ -28,7 +28,6 @@ class Core
         }
         return self::$instance;
     }
-
     // others global functions
 }
 ?>

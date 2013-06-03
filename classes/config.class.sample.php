@@ -16,9 +16,9 @@ class Config
 }
 
 // db
-Config::write('db.host', '127.0.0.1');
+Config::write('db.host', '{DBHOST}');
 Config::write('db.port', '3306');
-Config::write('db.basename', 'CMS');
-Config::write('db.user', 'root');
-Config::write('db.password', 'root');
+Config::write('db.basename', '{DBNAME}');
+Config::write('db.user', '{DBUSER}');
+Config::write('db.password', '{DBPASSWORD}');
 ?>

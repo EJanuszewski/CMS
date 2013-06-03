@@ -1,0 +1,93 @@
+html,body {
+	text-align: center;
+	background:#D47677;
+	color:#7E7E7E;
+	font-family: 'Roboto', sans-serif;
+}
+a {
+	color:#be6a6a;
+	text-decoration: none;	
+}
+#wrapper {
+	width:800px;
+	margin:0 auto;
+	display:block;
+	background:#FFF;
+	padding:50px;
+}
+#wrapper #header {
+	width:800px;
+	height:200px;
+}
+#admin #wrapper #header {
+	height:80px;
+}
+#admin #header #nav ul li {
+	float: left;
+	width: 33%;
+	background: #c96162;
+	list-style-type: none;
+}
+#admin #header #nav ul li:hover {
+	background: #d47677;
+}
+#admin #header #nav ul li a {
+	color:#fff;
+	display: block;
+	padding:10px;
+}
+#admin #header #nav ul li ul {
+	display: none;
+	padding: 0;
+}
+#admin #header #nav ul li ul li {
+	width: 100%;
+}
+form label {
+	color:#AAA;
+	padding:4px 7px 5px 0;
+	width:125px;
+	float: left;
+	text-align: right;
+}
+form input {
+	width:153px;
+	border:1px solid #aaa;
+	padding:5px;
+	color:#7E7E7E;
+}
+form .item {
+	width:300px;
+	margin: 0 150px;
+	position: relative;
+}
+form input[type=submit] {
+	cursor: pointer;
+	margin-top:15px;
+	margin-left: 127px;
+}
+form .item .err {
+	background: #BE6A6A;
+	color: #fff;
+	padding: 3px 4px;
+	position: absolute;
+	left: 300px;
+	margin: 2px 0;
+	top: 0;
+	width: 300px;
+	display:none;
+}
+#success {
+	padding:5px;
+	background: #acd9ae;
+	display:none;
+}
+#error {
+	padding:5px;
+	background: #BE6A6A;
+	display:none;
+	color: #fff;
+}
+::selection {
+	background:#DE8081;
+}
