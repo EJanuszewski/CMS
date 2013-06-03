@@ -39,17 +39,14 @@ if($_POST) {
 			}
 
 			//Perform the SQL
-			$q = $core->dbh->prepare('CREATE TABLE IF NOT EXISTS `pages` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` text NOT NULL,`title` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf32 AUTO_INCREMENT=2 ;CREATE TABLE IF NOT EXISTS `users` (`id` int(11) NOT NULL AUTO_INCREMENT,`username` varchar(255) NOT NULL,`password` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf32 AUTO_INCREMENT=1 ');
+			$q = $core->dbh->prepare('CREATE TABLE IF NOT EXISTS `pages` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` text NOT NULL,`title` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;CREATE TABLE IF NOT EXISTS `users` (`id` int(11) NOT NULL AUTO_INCREMENT,`username` varchar(255) NOT NULL,`password` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ');
 			$q->execute();
 
 			//Add the admin user
 			$adminUser = $_POST['adminUser'];
 			$adminPassword = $_POST['adminPassword'];
 
-			$dynamics = md5(substr($adminUser, 0, strlen($adminUser)/2) . $adminPassword);
-			$salt = substr($dynamics, 0, 16);
-			$pepper = substr($dynamics, 16);
-			$hashedPass = hash('sha512', $salt.$adminPassword.$pepper);
+			$hashedPass = $core->getHash($adminUser,$adminPassword);
 
 			$q = $core->dbh->prepare('INSERT INTO `users` (`username`,`password`) VALUES("'.$adminUser.'","'.$hashedPass.'")');
 			$q->execute();

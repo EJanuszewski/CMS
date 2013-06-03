@@ -25,13 +25,15 @@ if($_POST) {
 	//Check they all have a value
 	if($adminUser != '' && $adminPassword != '') {
 		//Hash
-		$hashedPass = $core->getHash($adminUser,$adminPassword);
+		$dynamics = md5(substr($adminUser, 0, strlen($adminUser)/2) . $adminPassword);
+		$salt = substr($dynamics, 0, 16);
+		$pepper = substr($dynamics, 16);
+		$hashedPass = hash('sha512', $salt.$adminPassword.$pepper);
 		//Try login
 		//Perform the SQL
-		$q = $core->dbh->prepare('SELECT * FROM `users` WHERE `username` = "'.$adminUser.'" AND `password` = "'.$hashedPass.'"');
-		$q->execute();
+		$q = $core->dbh->query('SELECT * FROM `users` WHERE `username` = "'.$adminUser.'" AND `password` = "'.$hashedPass.'"');
 		$r = $q->rowCount();
-		if($r >= 1) {
+		if($r == 1) {
 			//Login successful
 			//Set the cookie so they see the admin panel
 			$_SESSION['admin'] = 1;
@@ -71,6 +73,7 @@ if($_POST) {
 		</div>
 		<div id="main">
 			<?php if($eStr) { ?><div id="error"><?php echo $eStr; ?></div><?php } ?>
+			<h2>Create a new page</h2>
 			<script>
 				$(document).ready(function() {
 					$("#error").fadeIn("2000");

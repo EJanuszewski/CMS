@@ -28,6 +28,15 @@ class Core
         }
         return self::$instance;
     }
+
+    public static function getHash($adminUser,$adminPassword) {
+        $dynamics = md5(substr($adminUser, 0, strlen($adminUser)/2) . $adminPassword);
+        $salt = substr($dynamics, 0, 16);
+        $pepper = substr($dynamics, 16);
+        $hashedPass = hash('sha512', $salt.$adminPassword.$pepper);
+
+        return $hashedPass;
+    }
     // others global functions
 }
 ?>
