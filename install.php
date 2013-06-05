@@ -14,10 +14,11 @@ if($_POST) {
 	}
 	if($n >= 4) {
 		$err = 0;
+		$eStr = '';
        try {
 		//Try connect to the database
 			$dsn = 'mysql:host='.$host.';dbname='.$dbName.';port=3306;connect_timeout=15';
-	       $testDb = new PDO($dsn, $username, $password);               	
+	       	$testDb = new PDO($dsn, $username, $password);               	
        } catch(PDOException $e) {
 			$eStr =  $e->getMessage();
 			$err = 1;
@@ -25,10 +26,10 @@ if($_POST) {
        	if($err == 0) {
 			//Write the config
 			$file = file_get_contents('classes/config.class.sample.php');
-				$file = str_replace("{DBHOST}", $host, $file);
-				$file = str_replace("{DBNAME}", $dbName, $file);
-				$file = str_replace("{DBUSER}", $username, $file);
-				$file = str_replace("{DBPASSWORD}", $password, $file);
+			$file = str_replace("{DBHOST}", $host, $file);
+			$file = str_replace("{DBNAME}", $dbName, $file);
+			$file = str_replace("{DBUSER}", $username, $file);
+			$file = str_replace("{DBPASSWORD}", $password, $file);
 			if(file_put_contents('classes/config.class.php', $file)) {
 				require_once 'classes/config.class.php';
 				require_once('classes/core.class.php');
@@ -46,10 +47,10 @@ if($_POST) {
 			$adminUser = $_POST['adminUser'];
 			$adminPassword = $_POST['adminPassword'];
 
-			$hashedPass = $core->getHash($adminUser,$adminPassword);
+			$hashedPass = Core::getHash($adminUser,$adminPassword);
+			$q = $core->dbh->prepare('INSERT INTO `users` (`username`,`password`) VALUES(?,?)');
+			$q->execute(array($adminUser,$hashedPass));
 
-			$q = $core->dbh->prepare('INSERT INTO `users` (`username`,`password`) VALUES("'.$adminUser.'","'.$hashedPass.'")');
-			$q->execute();
 		}
 	}
 
@@ -70,7 +71,7 @@ if($_POST) {
 			<p>This will create your config and install the database</p>
 		</div>
 		<div id="main">
-			<?php if($s == true) { ?><div id="success">Successfully created config file and setup database, you may view your admin at <?php echo $_SERVER['HTTP_HOST'].str_replace("install.php", "admin", $_SERVER['REQUEST_URI']) ?></div><?php } ?>
+			<?php if($s == true) { ?><div id="success">Successfully created config file and setup database, you may view your admin at <?php echo $_SERVER['HTTP_HOST'].str_replace("install", "admin", $_SERVER['REQUEST_URI']) ?></div><?php } ?>
 			<?php if($eStr) { ?><div id="error"><?php echo $eStr; ?></div><?php } ?>
 			<h2>Please fill in your database details below</h2>
 			<form action="" method="POST">

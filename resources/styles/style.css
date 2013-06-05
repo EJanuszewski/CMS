@@ -8,6 +8,9 @@ a {
 	color:#be6a6a;
 	text-decoration: none;	
 }
+h2.title {
+	margin-left:-500px;
+}
 #wrapper {
 	width:800px;
 	margin:0 auto;
@@ -27,6 +30,7 @@ a {
 	width: 33%;
 	background: #c96162;
 	list-style-type: none;
+	position: relative;
 }
 #admin #header #nav ul li:hover {
 	background: #d47677;
@@ -34,14 +38,40 @@ a {
 #admin #header #nav ul li a {
 	color:#fff;
 	display: block;
-	padding:10px;
+	padding:10px 14px;
 }
 #admin #header #nav ul li ul {
 	display: none;
 	padding: 0;
+	position: absolute;
 }
 #admin #header #nav ul li ul li {
 	width: 100%;
+}
+#admin form#newPage label {
+	text-align: none;
+	width: auto;
+}
+#admin form#newPage input {
+	font-family: 'Roboto', sans-serif;
+	padding:10px;
+	float:left;
+	width: 300px;
+}
+#admin input.valid {
+	border: 2px dashed #13ff58;
+}
+#admin input.invalid {
+	border: 2px dashed #f00;
+}
+#admin textarea {
+	font-family: 'Roboto', sans-serif;
+	color:#7E7E7E;
+	padding:10px;
+	float:left;
+	width: 600px;
+	min-height:300px;
+	border:1px solid #aaa;
 }
 form label {
 	color:#AAA;
@@ -87,6 +117,9 @@ form .item .err {
 	background: #BE6A6A;
 	display:none;
 	color: #fff;
+}
+.clear{
+	clear:both;
 }
 ::selection {
 	background:#DE8081;
