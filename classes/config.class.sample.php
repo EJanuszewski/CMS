@@ -21,4 +21,5 @@ Config::write('db.port', '3306');
 Config::write('db.basename', '{DBNAME}');
 Config::write('db.user', '{DBUSER}');
 Config::write('db.password', '{DBPASSWORD}');
+Config::write('baseUrl', '{BASEURL}');
 ?>

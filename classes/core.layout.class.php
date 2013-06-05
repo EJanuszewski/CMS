@@ -10,7 +10,7 @@ class CoreLayout {
 					<li><a href="#">Pages</a>
 						<ul>
 							<li><a href="create-page">Create New Page</a></li>
-							<li><a href="#">Edit Pages</a></li>
+							<li><a href="edit-pages">Edit Pages</a></li>
 						</ul>
 					</li>
 					<li class="logout"><a href="?logout">Logout</a></li>
@@ -23,8 +23,10 @@ class CoreLayout {
 
 	//Takes eStr(Error string) and username as variable
 	public static function loginPage($eStr, $adminUser) {
-			echo '<html>
+			echo '<!DOCTYPE html>
+			<html>
 			<head>
+				<meta charset="utf-8" />
 				<title>Admin Login - CMS</title>
 				<link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 				<script src="../resources/scripts/jquery-1.10.1.min.js"></script>
@@ -38,7 +40,7 @@ class CoreLayout {
 					<div id="main">
 						'.(($eStr != '') ? '<div id="error">'.$eStr.'</div>' : '').'
 						<h2>Please login below</h2>
-						<form action="" method="POST">
+						<form method="POST">
 							<div class="item input">
 								<label>Username</label>
 								<input type="text" value="'. (($adminUser != '') ? $adminUser : '').'" name="username" />
@@ -46,8 +48,8 @@ class CoreLayout {
 							</div>
 							<div class="item input">
 								<label>Password</label>
-								<input type="password" value="" name="password" />
-								<div class="err">Please enter your password</div>
+									<input type="password" value="" name="password" />
+									<div class="err">Please enter your password</div>
 							</div>
 							<div class="item">
 								<input type="submit" value="Login" name="login" />
@@ -79,6 +81,20 @@ class CoreLayout {
 				</div>
 			</body>
 			</html>';
+	}
+
+	//Gets a list of the pages and the titles from the database
+	public static function getPageList($pageList = '') {
+		//SQL to get the list
+		$q = Core::getInstance()->dbh->prepare("SELECT * FROM `pages`");;
+		$q->execute();
+		$pages = $q->fetchAll();
+		foreach ($pages as $key => $value) {
+			$pageList .= '<li><a href="'.Config::$confArray['baseUrl'].'/edit-page/'.$value['id'].'">'.$value['title'].'</a></li>';
+		}
+		echo '<ul id="pageList">
+				'.$pageList.'
+			</ul>';
 	}
 
 }

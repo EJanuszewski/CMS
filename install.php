@@ -30,8 +30,15 @@ if($_POST) {
 			$file = str_replace("{DBNAME}", $dbName, $file);
 			$file = str_replace("{DBUSER}", $username, $file);
 			$file = str_replace("{DBPASSWORD}", $password, $file);
+			//Check BaseUrl has http
+			$baseUrl = $_POST['baseUrl'];
+			require_once('classes/config.class.php');
+			if(isset(Config::$confArray['baseUrl']) && Config::$confArray['baseUrl'] != '{BASEURL}') $baseUrl = Config::$confArray['baseUrl'];
+			if (strpos($baseUrl,'http://') === false){
+	            $baseUrl = 'http://'.$baseUrl;
+	        }
+			$file = str_replace("{BASEURL}", $baseUrl, $file);
 			if(file_put_contents('classes/config.class.php', $file)) {
-				require_once 'classes/config.class.php';
 				require_once('classes/core.class.php');
 				$core = Core::getInstance();
 				$s = true; //Set success to true
@@ -57,24 +64,31 @@ if($_POST) {
 }
 
 ?>
+<!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8" />
 	<title>Install - CMS</title>
 	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 	<script src="resources/scripts/jquery-1.10.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href='resources/styles/style.css' />
 </head>
 <body>
-	<did id="wrapper">
+	<div id="wrapper">
 		<div id="header">
 			<h1>CMS Installation</h1>
 			<p>This will create your config and install the database</p>
 		</div>
 		<div id="main">
-			<?php if($s == true) { ?><div id="success">Successfully created config file and setup database, you may view your admin at <?php echo $_SERVER['HTTP_HOST'].str_replace("install", "admin", $_SERVER['REQUEST_URI']) ?></div><?php } ?>
+			<?php if($s == true) { ?><div id="success">Successfully created config file and setup database, you may view your admin at <a href="<?php echo $baseUrl.'/admin'; ?>"><?php echo $baseUrl.'/admin'; ?></a></div><?php } ?>
 			<?php if($eStr) { ?><div id="error"><?php echo $eStr; ?></div><?php } ?>
 			<h2>Please fill in your database details below</h2>
 			<form action="" method="POST">
+				<div class="item">
+					<label>Base URL</label>
+					<input type="text" value="<?php echo isset($baseUrl) ? $baseUrl : $_SERVER['HTTP_HOST']?>" name="baseUrl" />
+					<div class="err">Please fill in a base URL value</div>
+				</div>
 				<div class="item">
 					<label>Host</label>
 					<input type="text" value="<?php echo isset($host) ? $host : '';?>" name="host" />
