@@ -77,7 +77,6 @@ class CoreLayout {
 
 	//Builds scripts and styles etc needed for header and echos it out
 	public static function buildHeader($headerArray, $jQuery = false, $tinyMce = false) {
-		$filesArray = array("jquery"=>"resources/scripts/jquery-1.10.1.min.js","tinymce"=>"resources/scripts/tinymce/tinymce.min.js");
 		//Check which header scripts are needed
 		if(in_array("jquery", $headerArray)) $jQuery = true;
 		if(in_array("tinymce", $headerArray)) $tinyMce = true;
