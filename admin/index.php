@@ -23,18 +23,9 @@ if(isset($_POST['login'])) {
 
 }
 
-?>
-<?php if(isset($_SESSION['session']['admin']) && $_SESSION['session']['admin'] == 1) : ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<title>Home - CMS</title>
-	<base href="http://www.ejanuszewski.com/Projects/Ninetwozero/CMS/" />
-	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-	<script src="resources/scripts/jquery-1.10.1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href='resources/styles/style.css' />
-</head>
+if(isset($_SESSION['session']['admin']) && $_SESSION['session']['admin'] == 1) : 
+
+CoreLayout::buildHeader(array("jquery")); ?>
 <body id="admin">
 	<div id="wrapper">
 		<div id="header">

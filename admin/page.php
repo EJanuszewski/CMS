@@ -39,23 +39,8 @@ if(isset($_GET['id'])) {
 	$pageData = $q->fetch();
 }
 
-if(isset($_SESSION['session']['admin']) && $_SESSION['session']['admin'] == 1) : ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<title>Create Page - CMS</title>
-	<base href="<?php echo Config::read('baseUrl') ?>/" />
-	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-	<script src="resources/scripts/jquery-1.10.1.min.js"></script>
-	<script src="resources/scripts/tinymce/tinymce.min.js"></script>
-	<script>
-		tinymce.init({
-		    selector: "textarea"
-		 });
-	</script>
-	<link rel="stylesheet" type="text/css" href='resources/styles/style.css' />
-</head>
+if(isset($_SESSION['session']['admin']) && $_SESSION['session']['admin'] == 1) :
+CoreLayout::buildHeader(array("jquery","tinymce")); ?>
 <body id="admin">
 	<div id="wrapper">
 		<div id="header">
