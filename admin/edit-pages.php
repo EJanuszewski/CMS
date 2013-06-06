@@ -34,10 +34,11 @@ if(isset($_POST['title'])) {
 <head>
 	<meta charset="utf-8" />
 	<title>Edit Pages - CMS</title>
+	<base href="http://www.ejanuszewski.com/Projects/Ninetwozero/CMS/" />
 	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-	<script src="../resources/scripts/jquery-1.10.1.min.js"></script>
-	<script src="../resources/scripts/tinymce/tinymce.min.js"></script>
-	<link rel="stylesheet" type="text/css" href='../resources/styles/style.css' />
+	<script src="resources/scripts/jquery-1.10.1.min.js"></script>
+	<script src="resources/scripts/tinymce/tinymce.min.js"></script>
+	<link rel="stylesheet" type="text/css" href='resources/styles/style.css' />
 </head>
 <body id="admin">
 	<div id="wrapper">

@@ -9,8 +9,8 @@ class CoreLayout {
 					<li><a href="'.Config::read("baseUrl").'/admin">Home</a></li>
 					<li><a href="#">Pages</a>
 						<ul>
-							<li><a href="page">Create New Page</a></li>
-							<li><a href="edit-pages">Edit Pages</a></li>
+							<li><a href="admin/page">Create New Page</a></li>
+							<li><a href="admin/edit-pages">Edit Pages</a></li>
 						</ul>
 					</li>
 					<li class="logout"><a href="?logout">Logout</a></li>
