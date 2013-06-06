@@ -6,10 +6,10 @@ class CoreLayout {
 		//Check if install file is still there
 		if(file_exists('../install.php')) $insExists = '<div id="error"><b>Warning</b>: Please delete your install.php</div>';
 		$nav = 	'<ul>
-					<li><a href="">Home</a></li>
+					<li><a href="'.Config::read("baseUrl").'/admin">Home</a></li>
 					<li><a href="#">Pages</a>
 						<ul>
-							<li><a href="create-page">Create New Page</a></li>
+							<li><a href="page">Create New Page</a></li>
 							<li><a href="edit-pages">Edit Pages</a></li>
 						</ul>
 					</li>
@@ -81,20 +81,6 @@ class CoreLayout {
 				</div>
 			</body>
 			</html>';
-	}
-
-	//Gets a list of the pages and the titles from the database
-	public static function getPageList($pageList = '') {
-		//SQL to get the list
-		$q = Core::getInstance()->dbh->prepare("SELECT * FROM `pages`");;
-		$q->execute();
-		$pages = $q->fetchAll();
-		foreach ($pages as $key => $value) {
-			$pageList .= '<li><a href="'.Config::$confArray['baseUrl'].'/edit-page/'.$value['id'].'">'.$value['title'].'</a></li>';
-		}
-		echo '<ul id="pageList">
-				'.$pageList.'
-			</ul>';
 	}
 
 }

@@ -125,8 +125,8 @@ if($_POST) {
 			</form>
 			<script>
 				$(document).ready(function() {
-					$("#success").fadeIn("2000");
-					$("#error").fadeIn("2000");
+					$("#success").fadeIn(2000);
+					$("#error").fadeIn(2000);
 				});
 				$("form").submit(function(e) {
 					c = 0;

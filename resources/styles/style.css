@@ -11,6 +11,13 @@ a {
 h2.title {
 	text-align:left;
 }
+h2.title.update {
+	margin:0;
+}
+#titleHolder {
+	min-height: 80px;
+	padding:20px 0;
+}
 #wrapper {
 	width:800px;
 	margin:0 auto;
@@ -126,6 +133,12 @@ form#newPage .err {
 	padding:5px;
 	background: #acd9ae;
 	display:none;
+}
+#success.page {
+	width: 300px;
+	float: left;
+	margin: 16px 16px 0 16px;
+	padding: 9px;
 }
 #error {
 	padding:5px;
