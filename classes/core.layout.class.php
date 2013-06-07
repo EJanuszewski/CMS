@@ -11,6 +11,8 @@ class CoreLayout {
 						<ul>
 							<li><a href="admin/page">Create New Page</a></li>
 							<li><a href="admin/edit-pages">Edit Pages</a></li>
+							<li><a href="admin/template">New Template</a></li>
+							<li><a href="admin/edit-templates">Manage Templates</a></lI>
 						</ul>
 					</li>
 					<li class="logout"><a href="?logout">Logout</a></li>

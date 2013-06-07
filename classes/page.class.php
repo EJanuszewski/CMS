@@ -31,5 +31,14 @@ class Page {
 			</ul>';
 	}
 
+	//Takes the page title and the content
+	public static function newTemplate($title,$content) {
+		//Perform SQL to insert the page
+        $q = Core::getInstance()->dbh->prepare('INSERT INTO `templates` (`title`,`content`) VALUES (?,?)');
+        $q->execute(array($title,$content));
+		return Core::getInstance()->dbh->lastInsertId();
+        
+	}
+
 }
 ?>
