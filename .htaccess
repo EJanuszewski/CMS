@@ -1,2 +1,2 @@
 RewriteEngine on
-RewriteRule ^(\w+)/?$ $1.php [NC,L]
+RewriteRule ^([^/\.]+)/?$ index.php?page=$1 [L]

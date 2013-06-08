@@ -25,7 +25,7 @@ $q = Core::getInstance()->dbh->prepare("SELECT * FROM `templates`");
 $q->execute();
 $templateArr = $q->fetchAll();
 foreach($templateArr as $key=>$row) {
-	$templates .= '<option value="'.$key.'"'.((isset($_GET['id']) && $pageData['template'] == $key) ? ' selected="selected"' : '').'>'.$row['title'].'</div>';
+	$templates .= '<option value="'.$row['id'].'"'.((isset($_GET['id']) && $pageData['template'] == $row['id']) ? ' selected="selected"' : '').'>'.$row['title'].'</div>';
 }
 CoreLayout::buildHeader(array("jquery","tinymce"),"Create/Edit Page"); ?>
 <body id="admin">
@@ -45,8 +45,14 @@ CoreLayout::buildHeader(array("jquery","tinymce"),"Create/Edit Page"); ?>
 				<div class="item">
 					<label>Page Title</label>
 					<div class="clear"></div>
-					<input type="text" value="<?php echo isset($pageData['title']) ? $pageData['title'] : '';?>" name="title" class="input" />
+					<input id="title" type="text" value="<?php echo isset($pageData['title']) ? $pageData['title'] : '';?>" name="title" class="input" />
 					<div class="err">Please enter a page title</div>
+				</div>
+				<div class="item">
+					<label>Page URL</label>
+					<div class="clear"></div>
+					<input id="url" type="text" value="<?php echo isset($pageData['url']) ? $pageData['url'] : '';?>" name="url" class="input" />
+					<div class="err">Please enter a page URL</div>
 				</div>
 				<div class="item">
 					<label>Template</label>
@@ -75,6 +81,11 @@ CoreLayout::buildHeader(array("jquery","tinymce"),"Create/Edit Page"); ?>
 				}, function() {
 					$(this).children("ul").delay(1000).slideUp("fast");
 				});
+				$("input#title").keyup(function() {
+					//Check theres not already a URL value if editing a page
+					//Turn to lowercase and replace spaces with, regex taken from @http://www.coderrific.com/
+					$("input#url").val($("input#title").val().toLowerCase().replace(/ +/g,'-').replace(/[0-9]/g,'').replace(/[^a-z0-9-_]/g,'').trim());
+				})
 				$("form").submit(function(e) {
 					tinymce.triggerSave();
 					e.preventDefault();
@@ -93,7 +104,7 @@ CoreLayout::buildHeader(array("jquery","tinymce"),"Create/Edit Page"); ?>
 						$.ajax({
 							type: "POST",
 							url: "admin/ajax?action=page",
-							data: {title:$("input[type=text]").val(), content:$("textarea").val(), template:$("select").val()<?php echo (isset($_GET['id'])) ? ', id:$("input[type=hidden]").val(),update:1' : '';?>},
+							data: {title:$("input#title").val(), content:$("textarea").val(), template:$("select").val(), url:$("input#url").val()<?php echo (isset($_GET['id'])) ? ', id:$("input[type=hidden]").val(),update:1' : '';?>},
 							success:function(msg) {
 								console.log(msg);
 								if(msg) {

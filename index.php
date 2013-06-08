@@ -2,13 +2,17 @@
 
 require_once('classes/config.class.php');
 require_once('classes/core.class.php');
-$core = Core::getInstance();
+require_once('classes/page.class.php');
+phpinfo();
 //Check for the page string
 if($_GET['page']) {
-	$q = $core->dbh->prepare('SELECT * FROM `pages` WHERE `title` = "'.$_GET['page'].'"');
+	$q = Core::getInstance()->dbh->prepare('SELECT * FROM `pages` WHERE `url` = "'.$_GET['page'].'"');
 	$q->execute();
-	$r = $q->fetchAll();
-	echo $r[0]['content'];
+	$r = $q->fetch(PDO::FETCH_ASSOC);
+	//Fetch the template and put the content in it
+	$template = Page::getTemplateById($r['template']);
+	$content = str_replace("{CONTENT}", $r['content'], $template['content']);
 }
+echo $content;
 
 ?>

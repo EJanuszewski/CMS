@@ -19,6 +19,7 @@ class Core
         $password = Config::read('db.password');
 
         $this->dbh = new PDO($dsn, $user, $password);
+        $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     }
 
     public static function getInstance()

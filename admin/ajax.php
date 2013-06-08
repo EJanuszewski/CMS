@@ -11,11 +11,11 @@ require_once('../classes/page.class.php');
 			case 'page': //Update or create a new page
 				if(isset($_POST['title']) && isset($_POST['id']) == false) {
 					//If they post a title then add a new page
-					$returnId = Page::newPage($_POST['title'],$_POST['content'],$_POST['template']);
+					$returnId = Page::newPage($_POST['title'],$_POST['content'],$_POST['template'],$_POST['url']);
 					echo $returnId;
 				} elseif(isset($_POST['title']) && isset($_POST['content']) && isset($_POST['id']) && isset($_POST['update'])) {
 					//If they post a title/content and there is an id set then update the page
-					$updatePage = Page::updatePage($_POST['title'],$_POST['content'],$_POST['template'],$_POST['id']);
+					$updatePage = Page::updatePage($_POST['title'],$_POST['content'],$_POST['template'],$_POST['url'],$_POST['id']);
 				}
 			break;
 			case 'template': //Update or create a new template

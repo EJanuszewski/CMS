@@ -171,7 +171,14 @@ form#newPage .err {
 	display:none;
 	color: #fff;
 }
-
+/** Edit Page/template list **/
+ul#pageList {
+	list-style-type: none;
+}
+ul#pageList {
+	width:100%;
+	text-align:left;
+}
 /*** TinyMCE extra styling ***/
 #mce_14-body, #mce_20-body {
 	float:left;
