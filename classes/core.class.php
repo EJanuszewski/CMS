@@ -63,6 +63,15 @@ class Core
         return $_SESSION['session'];
     }
 
+    //Function to check if the user is logged in
+    public static function isLoggedIn() {
+        if(isset($_SESSION['session']['admin']) && $_SESSION['session']['admin'] == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     //Destroys session and redirects to main url
     public static function logout() {
         $_SESSION['session']['logged_in'] = 0;

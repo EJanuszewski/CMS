@@ -22,10 +22,10 @@ if(isset($_POST['login'])) {
 	}
 
 }
+if(Core::isLoggedIn() == true) :
 
-if(isset($_SESSION['session']['admin']) && $_SESSION['session']['admin'] == 1) : 
 
-CoreLayout::buildHeader(array("jquery")); ?>
+CoreLayout::buildHeader(array("jquery"),"Admin Home"); ?>
 <body id="admin">
 	<div id="wrapper">
 		<div id="header">

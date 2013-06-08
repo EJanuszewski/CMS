@@ -12,35 +12,16 @@ session_start();
 if(isset($_GET['logout'])) {
 	Core::logout();
 }
-if(isset($_POST['login'])) {
-	$adminUser = $_POST['username'];
-	$adminPassword = $_POST['password'];
-	$s = false; //Success bool
-
-	//Check they all have a value
-	if($adminUser != '' && $adminPassword != '') {
-		Core::login($adminUser,$adminPassword);
-	}
-
-}
-if(isset($_POST['title']) && isset($_GET['id']) == false && isset($_POST['id']) == false) {
-	//If they post a title then add a new page
-	$returnId = Page::newPage($_POST['title'],$_POST['content']);
-	header("Location:".Config::read('baseUrl').'/admin/page/'.$returnId);
-} elseif(isset($_POST['title']) && isset($_POST['content']) && isset($_POST['id']) && isset($_POST['update'])) {
-
-	//If they post a title/content and there is an id set then update the page
-	$updatePage = Page::updatePage($_POST['title'],$_POST['content'],$_POST['id']);
-}
+if(Core::isLoggedIn() == true) :
 if(isset($_GET['id'])) {
-	//If page id is set then get the content to populate the page
-	$q = Core::getInstance()->dbh->prepare("SELECT * FROM `pages` WHERE `id` = ?");
+	//If template id is set then get the content to populate the templates
+	$q = Core::getInstance()->dbh->prepare("SELECT * FROM `templates` WHERE `id` = ?");
 	$q->execute(array($_GET['id']));
 	$pageData = $q->fetch();
 }
 
-if(isset($_SESSION['session']['admin']) && $_SESSION['session']['admin'] == 1) :
-CoreLayout::buildHeader(array("jquery")); ?>
+
+CoreLayout::buildHeader(array("jquery"),"Create/Edit Template"); ?>
 <body id="admin">
 	<div id="wrapper">
 		<div id="header">
@@ -126,7 +107,7 @@ CoreLayout::buildHeader(array("jquery")); ?>
 					<div class="clear"></div>
 				</div>
 				<input type="hidden" value="<?php echo isset($_GET['id']) ? $_GET['id'] : '';?>" name="pageId" />
-				<input type="submit" value="Submit" name="submit" /><div id="success" class="page">Page updated successfully</div>
+				<input type="submit" value="Submit" name="submit" /><div id="success" class="page">Template updated successfully</div>
 				<div class="clear"></div>
 			</form>
 			<script>
@@ -140,7 +121,6 @@ CoreLayout::buildHeader(array("jquery")); ?>
 					$(this).children("ul").delay(1000).slideUp("fast");
 				});
 				$("form").submit(function(e) {
-					tinymce.triggerSave();
 					e.preventDefault();
 					c = 0; //Error count for validation
 					//Loop through input\'s to check they aren\'t empty, if so fade in the error message
@@ -156,13 +136,17 @@ CoreLayout::buildHeader(array("jquery")); ?>
 						//Send an ajax post
 						$.ajax({
 							type: "POST",
-							url: "admin/page",
-							data: {title:$("input[type=text]").val(), content:$("textarea").val(), id:$("input[type=hidden]").val(),update:1},
-							complete:function(msg) {
-								$("h2").fadeOut(1000, function() {
-									$(this).html('Editing '+$("input[type=text]").val()).fadeIn(2000);
-								});
-								$("#success").fadeIn(1000).delay(2000).fadeOut(2000);
+							url: "admin/ajax?action=template",
+							data: {title:$("input[type=text]").val(), content:$("textarea").val()<?php echo (isset($_GET['id'])) ? ', id:$("input[type=hidden]").val(),update:1' : '';?>},
+							success:function(msg) {
+								if(msg) {
+									window.location.replace("<?php echo Config::$confArray['baseUrl']; ?>"+"/admin/page/"+msg);
+								} else {
+									$("h2").fadeOut(1000, function() {
+										$(this).html('Editing '+$("input[type=text]").val()).fadeIn(2000);
+									});
+									$("#success").fadeIn(1000).delay(2000).fadeOut(2000);
+								}
 							}
 						});
 					}

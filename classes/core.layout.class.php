@@ -4,7 +4,7 @@ class CoreLayout {
 	
 	public static function getNav() {
 		//Check if install file is still there
-		if(file_exists('../install.php')) $insExists = '<div id="error"><b>Warning</b>: Please delete your install.php</div>';
+		if(file_exists('../install.php')) $insExists = '<div id="error"><b>Warning</b>: Please delete your install.php</div><div class="clear"></div>';
 		$nav = 	'<ul>
 					<li><a href="'.Config::read("baseUrl").'/admin">Home</a></li>
 					<li><a>Pages</a>
@@ -15,7 +15,7 @@ class CoreLayout {
 							<li><a href="admin/edit-templates">Manage Templates</a></lI>
 						</ul>
 					</li>
-					<li class="logout"><a href="?logout">Logout</a></li>
+					<li class="logout"><a href="admin/?logout">Logout</a></li>
 				</ul>';
 		if(isset($insExists)) $nav = $insExists.$nav;
 
@@ -78,7 +78,7 @@ class CoreLayout {
 	}
 
 	//Builds scripts and styles etc needed for header and echos it out
-	public static function buildHeader($headerArray, $jQuery = false, $tinyMce = false) {
+	public static function buildHeader($headerArray, $pageTitle, $jQuery = false, $tinyMce = false) {
 		//Check which header scripts are needed
 		if(in_array("jquery", $headerArray)) $jQuery = true;
 		if(in_array("tinymce", $headerArray)) $tinyMce = true;
@@ -88,7 +88,7 @@ class CoreLayout {
 				<html>
 				<head>
 					<meta charset="utf-8" />
-					<title>Create Page - CMS</title>
+					<title>'.$pageTitle.' - CMS</title>
 					<base href="'.Config::read('baseUrl').'/" />
 					<link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 					'.(($jQuery === true) ? '<script src="resources/scripts/jquery-1.10.1.min.js"></script>' : '').

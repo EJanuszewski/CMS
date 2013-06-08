@@ -47,7 +47,7 @@ if($_POST) {
 			}
 
 			//Perform the SQL
-			$q = $core->dbh->prepare('CREATE TABLE IF NOT EXISTS `pages` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` text NOT NULL,`title` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;CREATE TABLE IF NOT EXISTS `templates` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` text NOT NULL,`title` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;CREATE TABLE IF NOT EXISTS `users` (`id` int(11) NOT NULL AUTO_INCREMENT,`username` varchar(255) NOT NULL,`password` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ');
+			$q = $core->dbh->prepare('CREATE TABLE IF NOT EXISTS `pages` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` text NOT NULL,`title` varchar(255) NOT NULL,`template` int(11) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;CREATE TABLE IF NOT EXISTS `templates` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` text NOT NULL,`title` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;CREATE TABLE IF NOT EXISTS `users` (`id` int(11) NOT NULL AUTO_INCREMENT,`username` varchar(255) NOT NULL,`password` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ');
 			$q->execute();
 
 			//Add the admin user

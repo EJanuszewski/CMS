@@ -11,24 +11,14 @@ session_start();
 if(isset($_GET['logout'])) {
 	Core::logout();
 }
-if(isset($_POST['login'])) {
-	$adminUser = $_POST['username'];
-	$adminPassword = $_POST['password'];
-	$s = false; //Success bool
-
-	//Check they all have a value
-	if($adminUser != '' && $adminPassword != '') {
-		Core::login($adminUser,$adminPassword);
-	}
-
-}
+	
+if(Core::isLoggedIn() == true) :
 if(isset($_POST['title'])) {
 	//If they post a title
 	Page::newPage($_POST['title'],$_POST['content']);
 }
 
-if(isset($_SESSION['session']['admin']) && $_SESSION['session']['admin'] == 1) : 
-CoreLayout::buildHeader(array("jquery")); ?>
+CoreLayout::buildHeader(array("jquery"),"Edit Pages"); ?>
 <body id="admin">
 	<div id="wrapper">
 		<div id="header">
