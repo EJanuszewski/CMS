@@ -38,6 +38,7 @@ h2.title.update {
 #admin #header #nav ul {
 	padding: 0;
 	margin: 0;
+	z-index: 999;
 }
 #admin #header #nav ul li {
 	float: left;

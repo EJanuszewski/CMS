@@ -3,9 +3,8 @@
 require_once('classes/config.class.php');
 require_once('classes/core.class.php');
 require_once('classes/page.class.php');
-phpinfo();
 //Check for the page string
-if($_GET['page']) {
+if(isset($_GET['page'])) {
 	$q = Core::getInstance()->dbh->prepare('SELECT * FROM `pages` WHERE `url` = "'.$_GET['page'].'"');
 	$q->execute();
 	$r = $q->fetch(PDO::FETCH_ASSOC);
