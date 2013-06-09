@@ -25,7 +25,7 @@ class CoreLayout {
 
 	//Takes eStr(Error string) and username as variable
 	public static function loginPage($eStr, $adminUser) {
-			echo self::buildHeader(array("jquery")).'
+			echo self::buildHeader(array("jquery"),'Admin Login').'
 			<body id="admin">
 				<did id="wrapper">
 					<div id="header">
