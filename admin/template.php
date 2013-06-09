@@ -46,7 +46,7 @@ CoreLayout::buildHeader(array("jquery"),"Create/Edit Template"); ?>
 				<div id="templateBlock">
 					<label>Template Content(Use the tags below to insert a tag)</label>
 					<div class="clear"></div>
-					<textarea name="content" id="content"><?php echo isset($pageData['content']) ? $pageData['content'] : '';?></textarea>
+					<textarea name="content" id="content"><?php echo isset($pageData['content']) ? htmlentities($pageData['content'], ENT_QUOTES, 'UTF-8') : '';?></textarea>
 					<div id="templateItems">
 						<div class="templateItem html">HTML</div>
 						<div class="templateItem head">HEAD</div>
