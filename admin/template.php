@@ -140,7 +140,7 @@ CoreLayout::buildHeader(array("jquery"),"Create/Edit Template"); ?>
 							data: {title:$("input[type=text]").val(), content:$("textarea").val()<?php echo (isset($_GET['id'])) ? ', id:$("input[type=hidden]").val(),update:1' : '';?>},
 							success:function(msg) {
 								if(msg) {
-									window.location.replace("<?php echo Config::$confArray['baseUrl']; ?>"+"/admin/page/"+msg);
+									window.location.replace("<?php echo Config::$confArray['baseUrl']; ?>"+"/admin/template/"+msg);
 								} else {
 									$("h2").fadeOut(1000, function() {
 										$(this).html('Editing '+$("input[type=text]").val()).fadeIn(2000);
