@@ -100,7 +100,8 @@ h2.title.update {
 	position: absolute;
 	left:1px;
 	top:33px;
-
+	background: #fff;
+	border-right: 1px solid #000;
 }
 #admin #templateBlock #templateItems .templateItem {
 	float:left;
