@@ -86,7 +86,7 @@ if(get_magic_quotes_gpc()) die('Please turn off magic quotes before installing t
 			<form action="" method="POST">
 				<div class="item">
 					<label>Base URL</label>
-					<input type="text" value="<?php echo isset($baseUrl) ? $baseUrl : $_SERVER['HTTP_HOST']?>" name="baseUrl" />
+					<input type="text" value="<?php echo isset($baseUrl) ? $baseUrl : dirname($_SERVER['PHP_SELF']); ?>" name="baseUrl" />
 					<div class="err">Please fill in a base URL value</div>
 				</div>
 				<div class="item">
