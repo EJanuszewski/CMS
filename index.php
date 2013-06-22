@@ -8,7 +8,7 @@ require_once('classes/page.class.php');
 
 //GOTO install directory/file if it exists
 if( is_file(Config::read('setup.path')) ) {
-	header('Location: ' . Config::read('setupLocation'));
+	header('Location: ' . Config::read('setup.path'));
 	return;
 }
 
