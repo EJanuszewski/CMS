@@ -112,12 +112,12 @@ if(get_magic_quotes_gpc()) die('Please turn off magic quotes before installing t
 				<div class="item">
 					<label>Admin Username</label>
 					<input type="text" value="<?php echo isset($adminUser) ? $adminUser : '';?>" name="adminUser" />
-					<div class="err">Please fill in your password</div>
+					<div class="err">Please fill in your admin username</div>
 				</div>
 				<div class="item">
 					<label>Admin Password</label>
 					<input type="text" value="<?php echo isset($adminPassword) ? $adminPassword : '';?>" name="adminPassword" />
-					<div class="err">Please fill in your password</div>
+					<div class="err">Please fill in your admin password</div>
 				</div>
 				<div class="item">
 					<input type="submit" value="Submit" name="submit" />
