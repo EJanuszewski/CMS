@@ -1,17 +1,12 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+if( !is_file('classes/config.class.php') ) {
+	header('Location: install.php');
+	return;
+}
 
 require_once('classes/config.class.php');
 require_once('classes/core.class.php');
 require_once('classes/page.class.php');
-
-//GOTO install directory/file if it exists
-if( is_file(Config::read('setup.path')) ) {
-	header('Location: ' . Config::read('setup.path'));
-	return;
-}
-
 
 //Initialize the variables we're about to use
 $content = '';
