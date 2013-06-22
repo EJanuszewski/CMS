@@ -15,7 +15,10 @@ class Config
 
 }
 
-// db
+// Installation configuration
+Config::write('setup.path', 'install.php');
+
+// Database configuration
 Config::write('db.host', '{DBHOST}');
 Config::write('db.port', '3306');
 Config::write('db.basename', '{DBNAME}');
@@ -23,3 +26,4 @@ Config::write('db.user', '{DBUSER}');
 Config::write('db.password', '{DBPASSWORD}');
 Config::write('baseUrl', '{BASEURL}');
 ?>
+

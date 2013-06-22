@@ -1,8 +1,16 @@
 <?php
+if( !is_file('classes/config.class.php') ) {
+	header('Location: install.php');
+	return;
+}
 
 require_once('classes/config.class.php');
 require_once('classes/core.class.php');
 require_once('classes/page.class.php');
+
+//Initialize the variables we're about to use
+$content = '';
+
 //Check for the page string
 if(isset($_GET['page'])) {
 	$q = Core::getInstance()->dbh->prepare('SELECT * FROM `pages` WHERE `url` = "'.$_GET['page'].'"');
@@ -13,5 +21,4 @@ if(isset($_GET['page'])) {
 	$content = str_replace("{CONTENT}", $r['content'], $template['content']);
 }
 echo $content;
-
 ?>

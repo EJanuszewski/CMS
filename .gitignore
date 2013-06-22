@@ -213,3 +213,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# CMS specific user implementations
+classes/config.class.php
