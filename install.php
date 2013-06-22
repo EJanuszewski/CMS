@@ -6,6 +6,7 @@ if($_POST) {
 	$password = $_POST['password'];
 	$n = 0;
 	$s = false;
+	
 	//Check they all have a value
 	foreach ($_POST as $key => $value) {
 		if($value != '') {
@@ -47,7 +48,7 @@ if($_POST) {
 			}
 
 			//Perform the SQL
-			$q = $core->dbh->prepare('CREATE TABLE IF NOT EXISTS `pages` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` text NOT NULL,`title` varchar(255) NOT NULL,`template` int(11) NOT NULL,`url` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;CREATE TABLE IF NOT EXISTS `templates` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` text NOT NULL,`title` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;CREATE TABLE IF NOT EXISTS `users` (`id` int(11) NOT NULL AUTO_INCREMENT,`username` varchar(255) NOT NULL,`password` varchar(255) NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ');
+			$q = $core->dbh->prepare(get_file_contents('database/initial_database.sql'));
 			$q->execute();
 
 			//Add the admin user
@@ -60,7 +61,6 @@ if($_POST) {
 
 		}
 	}
-
 }
 if(get_magic_quotes_gpc()) die('Please turn off magic quotes before installing the CMS, see <a href="http://php.net/manual/en/security.magicquotes.disabling.php">http://php.net/manual/en/security.magicquotes.disabling.php</a> for more information or contact your host.');
 ?>
