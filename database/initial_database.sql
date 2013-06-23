@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `templates` (
 
 CREATE TABLE IF NOT EXISTS `users` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`username` varchar(255) NOT NULL,
+	`username` varchar(255) UNIQUE NOT NULL,
 	`password` varchar(255) NOT NULL,
 	`role` int(4) NOT NULL,
 	PRIMARY KEY (`id`)
@@ -24,8 +24,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 CREATE TABLE IF NOT EXISTS `user_roles` (
 	`id` int(4) NOT NULL AUTO_INCREMENT,
-	`name` varchar(255) NOT NULL,
+	`name` varchar(255) UNIQUE NOT NULL,
 	`description` varchar(255) NOT NULL,
 	`can_do_everything` tinyint(1) NOT NULL,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO `user_roles`
+(`name`, `description`, `can_do_everything`) 
+VALUES 
+('Administrators', 'The default user group', 1) ;
