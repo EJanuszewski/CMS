@@ -1,4 +1,9 @@
 <?php
+if( is_file('classes/config.class.php') ) {
+	header('Location: admin/');
+	return;
+}
+
 if($_POST) {
 	$host = $_POST['host'];
 	$dbName = $_POST['db_name'];
@@ -13,17 +18,20 @@ if($_POST) {
 			$n++;
 		}
 	}
+	
 	if($n >= 4) {
 		$err = 0;
 		$eStr = '';
-       try {
-		//Try connect to the database
+		
+		try {
+			//Try connect to the database
 			$dsn = 'mysql:host='.$host.';dbname='.$dbName.';port=3306;connect_timeout=15';
-	       	$testDb = new PDO($dsn, $username, $password);               	
-       } catch(PDOException $e) {
+		   	$testDb = new PDO($dsn, $username, $password);               	
+		} catch(PDOException $e) {
 			$eStr =  $e->getMessage();
 			$err = 1;
-       }
+		}
+		
        	if($err == 0) {
 			//Write the config
 			$file = file_get_contents('classes/config.class.sample.php');
@@ -31,38 +39,44 @@ if($_POST) {
 			$file = str_replace("{DBNAME}", $dbName, $file);
 			$file = str_replace("{DBUSER}", $username, $file);
 			$file = str_replace("{DBPASSWORD}", $password, $file);
+			
 			//Check BaseUrl has http
 			$baseUrl = $_POST['baseUrl'];
-			require_once('classes/config.class.php');
-			if(isset(Config::$confArray['baseUrl']) && Config::$confArray['baseUrl'] != '{BASEURL}') $baseUrl = Config::$confArray['baseUrl'];
-			if (strpos($baseUrl,'http://') === false){
-	            $baseUrl = 'http://'.$baseUrl;
-	        }
+			if (strpos($baseUrl,'://') === false){
+	            $baseUrl = 'http://'. $baseUrl;
+	        }	        
+	        
+	        // Add the BaseUrl to the configuration and writing to it
 			$file = str_replace("{BASEURL}", $baseUrl, $file);
-			if(file_put_contents('classes/config.class.php', $file)) {
+			if(@file_put_contents('classes/config.class.php', $file)) {
+				require_once('classes/config.class.php');
 				require_once('classes/core.class.php');
 				$core = Core::getInstance();
 				$s = true; //Set success to true
 			} else {
-				echo 'An Error occured, please ensure config.class.php is writeable';
+				$permission = substr(sprintf('%o', fileperms('classes')), -3);
+				echo 'An Error occured, please ensure config.class.php is writeable.', '<br />';
+				echo 'The current permissions for the directory is: ', $permission, '<br />';
+				die;
 			}
 
 			//Perform the SQL
-			$q = $core->dbh->prepare(get_file_contents('database/initial_database.sql'));
-			$q->execute();
+			$sqlQueries = file_get_contents('database/initial_database.sql');
+			$q = $core->dbh->exec($sqlQueries);
 
 			//Add the admin user
 			$adminUser = $_POST['adminUser'];
 			$adminPassword = $_POST['adminPassword'];
 
 			$hashedPass = Core::getHash($adminUser,$adminPassword);
-			$q = $core->dbh->prepare('INSERT INTO `users` (`username`,`password`) VALUES(?,?)');
+			$q = $core->dbh->prepare('INSERT INTO `users` (`username`,`password`, `role`) VALUES(?,?, 1)');
 			$q->execute(array($adminUser,$hashedPass));
 
 		}
 	}
 }
 if(get_magic_quotes_gpc()) die('Please turn off magic quotes before installing the CMS, see <a href="http://php.net/manual/en/security.magicquotes.disabling.php">http://php.net/manual/en/security.magicquotes.disabling.php</a> for more information or contact your host.');
+$suggestedUrl = $_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']);
 ?>
 <!DOCTYPE html>
 <html>
@@ -86,7 +100,7 @@ if(get_magic_quotes_gpc()) die('Please turn off magic quotes before installing t
 			<form action="" method="POST">
 				<div class="item">
 					<label>Base URL</label>
-					<input type="text" value="<?php echo isset($baseUrl) ? $baseUrl : dirname($_SERVER['PHP_SELF']); ?>" name="baseUrl" />
+					<input type="text" value="<?php echo isset($baseUrl) ? $baseUrl : $suggestedUrl; ?>" name="baseUrl" />
 					<div class="err">Please fill in a base URL value</div>
 				</div>
 				<div class="item">
