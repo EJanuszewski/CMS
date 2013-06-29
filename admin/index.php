@@ -1,16 +1,21 @@
 <?php
+session_start();
 $start = microtime();
+
 require_once('../classes/config.class.php');
 require_once('../classes/core.class.php');
 require_once('../classes/core.layout.class.php');
+
 $core = Core::getInstance();
 $eStr = ''; //Error string
 $adminUser = '';	
+
 if(isset(Config::$confArray['baseUrl']) && Config::$confArray['baseUrl'] != '{BASEURL}') $baseUrl = Config::$confArray['baseUrl'];
-session_start();
+
 if(isset($_GET['logout'])) {
 	Core::logout();
 }
+
 if(isset($_POST['login'])) {
 	$adminUser = $_POST['username'];
 	$adminPassword = $_POST['password'];
@@ -22,10 +27,10 @@ if(isset($_POST['login'])) {
 	}
 
 }
+
 if(Core::isLoggedIn() == true) :
-
-
-CoreLayout::buildHeader(array("jquery"),"Admin Home"); ?>
+	CoreLayout::buildHeader(array("jquery"),"Admin Home"); 
+?>
 <body id="admin">
 	<div id="wrapper">
 		<div id="header">
@@ -67,6 +72,10 @@ CoreLayout::buildHeader(array("jquery"),"Admin Home"); ?>
 	</div>
 </body>
 </html>
-<?php else: CoreLayout::loginPage($eStr,$adminUser); endif; 
+<?php 
+else: 
+	CoreLayout::loginPage($eStr,$adminUser);
+endif; 
 $loadTime = microtime()-$start;
-echo 'Page generated in: '.$loadTime.'s';?>
+echo 'Page generated in: '.$loadTime.'s';
+?>
